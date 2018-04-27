@@ -1,0 +1,83 @@
+.portrait .zilver-slider {
+  overflow: visible;
+  height: auto !important;
+}
+
+.portrait .zilver-slider li {
+  height: auto !important;
+}
+
+/* ----------- Desktop ----------- */
+
+@media screen and (min-width: 1024px) {
+  .zilver-slider {
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+  }
+  .zilver-slider li {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    overflow: hidden;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .zilver-slider li img {
+    display: none;
+  }
+}
+
+/* ----------- iPad 3, 4 and Pro 9.7" ----------- */
+/* Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+  .zilver-slider {
+    position: static;
+  }
+  .zilver-slider li {
+    background: none !important;
+    width: 33.3%;
+    height: auto !important;
+    float: left;
+    position: static;
+  }
+  .zilver-slider li img {
+    width: 100%;
+    display: block;
+  }
+}
+
+/* ------ iPhone 5,6,7,8 ------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 667px) and (orientation: portrait) {
+  .zilver-slider li {
+    width: 100%;
+    background: none !important;
+  }
+  .zilver-slider li img {
+    width: 100%;
+  }
+}
+
+/* ------ iPhone 6,7,8 plus ------- */
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (orientation: portrait) {
+  .zilver-slider li {
+    width: 100%;
+    background: none !important;
+  }
+  .zilver-slider li img {
+    width: 100%;
+  }
+}
+
+/* ------ iPhone X ------- */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
+  .zilver-slider li {
+    width: 100%;
+    background: none !important;
+  }
+  .zilver-slider li img {
+    width: 100%;
+  }
+}
