@@ -7,8 +7,8 @@
       child_tag: "li",
       autoplay: true,
       slide_speed: 500,
-      landscape_selector: "landscape",
-      portrait_selector: "portrait"
+      el_to_click_to_slide_left: "",
+      el_to_click_to_slide_right: ""
     }
     $.extend(defaults, options);
 
@@ -24,89 +24,87 @@
 
     function __init() {
 
-      add_remove_classes();
-
       update_all_size();
 
-      $("body").on(
+      // Slide left on click to the selected element
+      $(defaults.el_to_click_to_slide_left).on(
         "click",
         function() {
-          slide_left($(this));
+          slide_left_all_items($(this));
         }
       );
+
+      // Slide left on arrowkey right
+      $("body").keydown(function(e) {
+        if (e.keyCode == 39) {
+          // left
+          slide_left_all_items();
+        }
+      });
+
+      // Slide left swipe left
+      container
+        .on(
+          "swipeleft",
+          function() {
+            slide_left_all_items();
+          });
+
     }
 
     function update_all() {
-      add_remove_classes();
       update_all_size();
     }
 
-    function add_remove_classes() {
-      if(get_is_landscape()) {
-        $("body")
-          .addClass(defaults.landscape_selector)
-          .removeClass(defaults.portrait_selector);
-      } else {
-        $("body")
-          .addClass(defaults.portrait_selector)
-          .removeClass(defaults.landscape_selector);
-      }
-    }
-
-    function get_is_landscape() {
-      if(window.innerWidth > window.innerHeight) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    function get_window_width() {
+    function get_window_w() {
       return $(window).width();
     }
 
-    function get_window_height() {
+    function get_window_h() {
       return $(window).height();
     }
 
-    function update_slider_size() {
+    function update_slider_w_and_h() {
       container.css({
-        width: get_window_width(),
-        height: get_window_height()
+        width: get_window_w(),
+        height: get_window_h()
       });
     }
 
-    function get_child_width() {
+    function get_child_w() {
       return parseInt(children.first().width());
     }
 
-    function update_child_size_and_height(animate) {
+    function update_items_h_and_zindex() {
+      counter_reverse = container.children(defaults.child_tag).length;
+      children.each(function() {
+        $(this).css({
+          "height": get_window_h(),
+          "z-index": counter_reverse
+        });
+      });
+    }
+
+    function assign_left_css_value(el, counter) {
+      el.css({
+        left: get_child_w() * counter
+      });
+    }
+
+    function update_child_size_and_h(animate) {
       counter = 0;
       counter_reverse = container.children(defaults.child_tag).length;
 
-      if (animate == true) {
-        container.children(defaults.child_tag).each(function() {
-          $(this).css({
-            "z-index": counter_reverse
-          })
-          $(this).animate({
-            left: get_child_width() * counter,
-            height: get_window_height()
-          });
-          set_children_bg($(this));
-          counter++;
-          counter_reverse--;
-        });
-      } else {
-        container.children(defaults.child_tag).each(function() {
-          $(this).css({
-            left: get_child_width() * counter,
-            height: get_window_height()
-          });
-          set_children_bg($(this));
-          counter++;
-        });
-      }
+      container.children(defaults.child_tag).each(function() {
+
+        update_items_h_and_zindex();
+
+        assign_left_css_value($(this), counter);
+
+        set_children_bg($(this));
+        counter++;
+        counter_reverse--;
+      });
     }
 
     function set_children_bg(child) {
@@ -117,17 +115,66 @@
     }
 
     function update_all_size() {
-      if($("body").hasClass(defaults.landscape_selector)){
-        update_slider_size();
-        update_child_size_and_height(false, false);
+      update_slider_w_and_h();
+      update_child_size_and_h(false);
+    }
+
+    function get_item_w() {
+      return parseInt(children.first().width());
+    }
+
+    function get_slider_length(start_from_zero) {
+      if (start_from_zero == true) {
+        return children.length - 1;
+      } else {
+        return children.length;
       }
     }
 
-    function slide_left(slider) {
-      if($("body").hasClass(defaults.landscape_selector)){
-        container.children().first().clone(container);
-        update_child_size_and_height(true, false);
-      }
+    function move_first_item_to_last() {
+      container.children().first().appendTo(container);
+    }
+
+    function move_last_item_to_first() {
+      container.prepend(container.children().last());
+    }
+
+    function slide_left_all_items() {
+      children.each(function(i, el) {
+        var el = $(el);
+        var css_current_left_value = parseInt(el.css("left"));
+        el
+          .stop()
+          .animate({
+            left: (css_current_left_value - get_item_w()),
+            duration: 1500
+          }, 250, function() {
+            if (i == get_slider_length(true)) {
+              move_first_item_to_last();
+              update_child_size_and_h(true);
+            }
+          });
+      });
+    }
+
+    function slide_right_all_items() {
+      children.each(function(i, el) {
+        var el = $(el);
+        var css_current_left_value = parseInt(el.css("left"));
+
+        if (i == get_slider_length(true)) {
+          move_last_item_to_first();
+          update_child_size_and_h(true);
+        }
+        el
+          .stop()
+          .animate({
+            left: (css_current_left_value + get_item_w()),
+            duration: 1500
+          }, 250, function() {
+
+          });
+      });
     }
 
     __init();

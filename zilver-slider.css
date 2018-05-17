@@ -16,6 +16,21 @@
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
+  width: 100%;
+}
+
+.zilver-close {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(255,0,0,0);
+  width: 50%;
+  height: 40px;
+}
+
+.ui-loader {
+  display: none;
 }
 
 /* ----------- Desktop ----------- */
@@ -34,6 +49,17 @@
   .zilver-slider li {
     width: 100%;
   }
+
+  .zilver-close {
+    display: block;
+  }
+}
+
+/* Landscape */
+@media screen and (min-width: 1024px) and (orientation: landscape) {
+  .zilver-slider li {
+    width: 40%;
+  }
 }
 
 /* ------ iPhone 5,6,7,8 ------- */
@@ -41,6 +67,9 @@
 @media only screen and (min-device-width: 320px) and (max-device-width: 667px) and (orientation: portrait) {
   .zilver-slider li {
     width: 100%;
+  }
+  .zilver-close {
+    display: block;
   }
 }
 
@@ -50,6 +79,9 @@
   .zilver-slider li {
     width: 100%;
   }
+  .zilver-close {
+    display: block;
+  }
 }
 
 /* ------ iPhone X ------- */
@@ -57,5 +89,8 @@
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
   .zilver-slider li {
     width: 100%;
+  }
+  .zilver-close {
+    display: block;
   }
 }
