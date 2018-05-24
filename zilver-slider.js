@@ -8,7 +8,6 @@
       autoplay: true,
       slide_speed: 500,
       el_to_click_to_slide_left: "",
-      el_to_click_to_slide_right: "",
       close_button: true,
       close_button_debug_mode: false
     }
@@ -188,6 +187,12 @@
             container.fadeOut();
           }
         });
+    }
+
+    function autoplay() {
+      if(defaults.autoplay == true) {
+
+      }
     }
 
     __init();
