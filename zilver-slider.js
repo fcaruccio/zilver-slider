@@ -8,8 +8,11 @@
       autoplay: true,
       slide_speed: 500,
       el_to_click_to_slide_left: "",
-      el_to_click_to_slide_right: ""
+      el_to_click_to_slide_right: "",
+      close_button: true,
+      close_button_debug_mode: false
     }
+
     $.extend(defaults, options);
 
     var container = $(this);
@@ -23,6 +26,8 @@
     });
 
     function __init() {
+
+      create_close_button();
 
       update_all_size();
 
@@ -155,6 +160,34 @@
             }
           });
       });
+    }
+
+    function create_close_button() {
+      if (defaults.close_button == true) {
+        container
+          .append($("<span>", {
+            class: "zilver-close"
+          }))
+          .css({
+            "display": "block"
+          });
+        if (defaults.close_button_debug_mode == true) {
+          container
+            .children("span")
+            .addClass("debug_mode");
+        }
+        close_slider();
+      }
+    }
+
+    function close_slider() {
+      container
+        .children("span")
+        .on({
+          click: function() {
+            container.fadeOut();
+          }
+        });
     }
 
     __init();
