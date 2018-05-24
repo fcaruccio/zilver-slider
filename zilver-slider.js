@@ -157,26 +157,6 @@
       });
     }
 
-    function slide_right_all_items() {
-      children.each(function(i, el) {
-        var el = $(el);
-        var css_current_left_value = parseInt(el.css("left"));
-
-        if (i == get_slider_length(true)) {
-          move_last_item_to_first();
-          update_child_size_and_h(true);
-        }
-        el
-          .stop()
-          .animate({
-            left: (css_current_left_value + get_item_w()),
-            duration: 1500
-          }, 250, function() {
-
-          });
-      });
-    }
-
     __init();
 
   }
