@@ -2,6 +2,8 @@
   width: 100%;
   overflow: hidden;
   position: absolute;
+  /* top: -3000px; */
+  left: 0;
 }
 
 .zilver-slider li img {
@@ -29,10 +31,18 @@
   cursor: url("img/close_small.png"), auto;
 }
 
-
-
 .zilver-close.debug_mode {
     background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.zilver-arrow {
+  position: fixed;
+  height: 60%;
+  width: 40%;
+  z-index: 14;
+  right: 0;
+  bottom: 0;
+  cursor: url("img/arrow.png"), auto;
 }
 
 .ui-loader {

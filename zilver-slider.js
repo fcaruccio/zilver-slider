@@ -7,9 +7,10 @@
       child_tag: "li",
       autoplay: true,
       slide_speed: 500,
-      el_to_click_to_slide_left: "",
+      el_to_click_to_slide_left: ".zilver-arrow",
       close_button: true,
-      close_button_debug_mode: false
+      close_button_debug_mode: false,
+      arrow: true
     }
 
     $.extend(defaults, options);
@@ -27,6 +28,7 @@
     function __init() {
 
       create_close_button();
+      create_arrow();
 
       update_all_size();
 
@@ -179,6 +181,15 @@
       }
     }
 
+    function create_arrow() {
+      if (defaults.arrow == true) {
+        container
+          .append($("<span>", {
+            class: "zilver-arrow"
+          }));
+      }
+    }
+
     function close_slider() {
       container
         .children("span")
@@ -190,7 +201,7 @@
     }
 
     function autoplay() {
-      if(defaults.autoplay == true) {
+      if (defaults.autoplay == true) {
 
       }
     }
