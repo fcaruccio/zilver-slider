@@ -27,13 +27,10 @@
     });
 
     function __init() {
-
       create_close_button();
       create_arrow();
-      autoplay();
-
       update_all_size();
-
+      autoplay();
       // Slide left on click to the selected element
       $(defaults.el_to_click_to_slide_left).on(
         "click",
@@ -41,7 +38,6 @@
           slide_left_all_items($(this));
         }
       );
-
       // Slide left on arrowkey right
       $("body").keydown(function(e) {
         if (e.keyCode == 39) {
@@ -49,7 +45,6 @@
           slide_left_all_items();
         }
       });
-
       // Slide left swipe left
       container
         .on(
@@ -57,7 +52,6 @@
           function() {
             slide_left_all_items();
           });
-
     }
 
     function update_all() {
@@ -102,13 +96,9 @@
     function update_child_size_and_h(animate) {
       counter = 0;
       counter_reverse = container.children(defaults.child_tag).length;
-
       container.children(defaults.child_tag).each(function() {
-
         update_items_h_and_zindex();
-
         assign_left_css_value($(this), counter);
-
         set_children_bg($(this));
         counter++;
         counter_reverse--;
@@ -140,7 +130,7 @@
     }
 
     function move_first_item_to_last() {
-      container.children().first().appendTo(container);
+      container.children(defaults.child_tag).stop(true,true).first().appendTo(container);
     }
 
     function move_last_item_to_first() {
@@ -152,11 +142,11 @@
         var el = $(el);
         var css_current_left_value = parseInt(el.css("left"));
         el
-          .stop()
+          .stop("slide_left_all_items", true,true)
           .animate({
             left: (css_current_left_value - get_item_w()),
-            duration: 1500
-          }, 250, function() {
+            queue: "slide_left_all_items"
+          }, 300, function() {
             if (i == get_slider_length(true)) {
               move_first_item_to_last();
               update_child_size_and_h(true);
