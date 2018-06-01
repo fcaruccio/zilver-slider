@@ -28,7 +28,11 @@
   width: 50%;
   height: 150px;
   z-index: 13;
-  cursor: url("img/close_small.png"), auto;
+  cursor: url("img/close.png"), auto;
+}
+
+.zilver-close:hover {
+  cursor: url("img/close.png"), auto;
 }
 
 .zilver-close.debug_mode {

@@ -5,12 +5,13 @@
 
     var defaults = {
       child_tag: "li",
-      autoplay: true,
       slide_speed: 500,
       el_to_click_to_slide_left: ".zilver-arrow",
       close_button: true,
       close_button_debug_mode: false,
-      arrow: true
+      arrow: true,
+      autoplay: false,
+      autoplay_time: 2500
     }
 
     $.extend(defaults, options);
@@ -29,6 +30,7 @@
 
       create_close_button();
       create_arrow();
+      autoplay();
 
       update_all_size();
 
@@ -201,8 +203,20 @@
     }
 
     function autoplay() {
-      if (defaults.autoplay == true) {
-
+      var autoplay_interval;
+      if(defaults.autoplay == true) {
+        container
+          .on({
+            mouseenter: function(){
+              clearInterval(autoplay_interval);
+            },
+            mouseleave: function(){
+              slide_left_all_items();
+              autoplay_interval = setInterval(function(){
+                slide_left_all_items();
+              }, defaults.autoplay_time);
+            }
+          });
       }
     }
 
